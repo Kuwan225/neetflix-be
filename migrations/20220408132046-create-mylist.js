@@ -14,10 +14,10 @@ module.exports = {
       moviesId: {
         type: Sequelize.INTEGER,
       },
-      isMyList: {
-        type: Sequelize.BOOLEAN,
-      },
       title: {
+        type: Sequelize.STRING,
+      },
+      duration: {
         type: Sequelize.STRING,
       },
       image: {

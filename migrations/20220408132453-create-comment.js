@@ -8,13 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      userId: {
+        type: Sequelize.INTEGER,
+      },
       image: {
         type: Sequelize.STRING,
       },
       nama: {
         type: Sequelize.STRING,
       },
-      filmId: {
+      moviesId: {
         type: Sequelize.INTEGER,
       },
       title: {

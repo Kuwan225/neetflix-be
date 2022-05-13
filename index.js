@@ -5,6 +5,7 @@ const User = require("./routes/user");
 const MyList = require("./routes/mylist");
 const Comment = require("./routes/comment");
 const Movies = require("./routes/movies");
+const Reviewed = require("./routes/reviewed");
 
 const path = require("path");
 
@@ -16,5 +17,6 @@ app.use(User);
 app.use(MyList);
 app.use(Comment);
 app.use(Movies);
+app.use(Reviewed);
 
 app.listen(3001, () => console.log("Listening at port: " + 3001));

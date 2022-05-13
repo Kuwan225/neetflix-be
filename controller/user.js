@@ -1,4 +1,4 @@
-const { User, MyList } = require("../helper/relation");
+const { User, MyList, Reviewed } = require("../helper/relation");
 const { hash, compare } = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRound = 10;
@@ -13,7 +13,14 @@ module.exports = {
         fullName: req.body.fullName,
         password: hashPassword,
       });
-      res.status(202).json({ message: "Succes sign up", data: data });
+      const payload = {
+        id: data.id,
+        fullname: data.fullname,
+      };
+      const token = jwt.sign(payload, "token");
+      res
+        .status(202)
+        .json({ message: "Signup succes", data: data, token: token });
     } catch (Error) {
       console.log(Error);
       res.status(422).json({ message: Error.sqlMessage });
@@ -30,11 +37,11 @@ module.exports = {
         },
       });
       if (!data) {
-        res.status(404).json({ message: "Data tidak ditemukan" });
+        res.status(404).json({ message: "Account not found" });
       }
       const isVeryvied = await compare(password, data.password);
       if (!isVeryvied) {
-        res.status(404).json({ message: "password/email salah" });
+        res.status(404).json({ message: "Wrong password" });
       }
 
       const payload = {
@@ -43,7 +50,7 @@ module.exports = {
       };
       const token = jwt.sign(payload, "token");
       res.json({
-        message: "succes masuk",
+        message: "Login Succes",
         fullName: data.fullName,
         token: token,
       });
@@ -68,7 +75,7 @@ module.exports = {
           },
         }
       );
-      res.json({ message: "Data succes di update" });
+      res.json({ message: "Succes updated profile" });
     } catch (error) {
       res.json({ message: error.message });
     }
@@ -83,16 +90,20 @@ module.exports = {
           where: { id: req.params.id },
         }
       );
-      res.status(202).json({ message: "Success update user" });
+      res.status(202).json({ message: "Succes update user" });
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
   },
   getOneUser: async (req, res) => {
-    const data = await User.findOne({
-      where: { id: req.params.id },
-      include: [{ model: MyList }],
-    });
-    res.status(202).json({ message: "succes", data: data });
+    try {
+      const data = await User.findOne({
+        where: { id: req.params.id },
+        include: [{ model: MyList }, { model: Reviewed }],
+      });
+      res.status(202).json({ message: "succes", data: data });
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
   },
 };

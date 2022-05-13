@@ -11,13 +11,19 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
       },
-      filmId: {
+      moviesId: {
         type: Sequelize.INTEGER,
+      },
+      image: {
+        type: Sequelize.STRING,
       },
       title: {
         type: Sequelize.STRING,
       },
-      time: {
+      duration: {
+        type: Sequelize.STRING,
+      },
+      date: {
         type: Sequelize.STRING,
       },
       genre: {
@@ -29,7 +35,7 @@ module.exports = {
       overview: {
         type: Sequelize.STRING,
       },
-      vote: {
+      rating: {
         type: Sequelize.STRING,
       },
       createdAt: {

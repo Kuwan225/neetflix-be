@@ -123,15 +123,14 @@ module.exports = {
       });
   },
   getOneTvSeries: async (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
     try {
       axios
         .get(
-          `
-          https://api.themoviedb.org/3/tv/${id}?api_key=3554211ccddedad28b58fe56cd457b08&language=en-US`
+          `https://api.themoviedb.org/3/tv/${id}?api_key=3554211ccddedad28b58fe56cd457b08&language=en-US`
         )
         .then((response) => {
-          res.status(200).json({ data: response.data.results });
+          res.status(200).json({ data: response.data });
         });
       // .cath((err) => {
       //   res.status(404).json({ message: err.message });
@@ -139,5 +138,32 @@ module.exports = {
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
+  },
+  getCastingTv: async (req, res) => {
+    const id = req.params.id;
+    axios
+      .get(
+        `https://api.themoviedb.org/3/tv/${id}/credits?api_key=3554211ccddedad28b58fe56cd457b08&language=en-US`
+      )
+      .then((response) => {
+        res.status(200).json({ data: response.data });
+      })
+      .cath((err) => {
+        res.status(404).json({ message: err.message });
+      });
+  },
+  getTrailerTv: async (req, res) => {
+    const id = req.params.id;
+    axios
+      .get(
+        `
+        https://api.themoviedb.org/3/tv/${id}/videos?api_key=3554211ccddedad28b58fe56cd457b08&language=en-US`
+      )
+      .then((response) => {
+        res.status(200).json({ data: response.data });
+      })
+      .cath((err) => {
+        res.status(404).json({ message: err.message });
+      });
   },
 };

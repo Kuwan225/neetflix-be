@@ -14,13 +14,15 @@ module.exports = (sequelize, DataTypes) => {
   reviewed.init(
     {
       userId: DataTypes.INTEGER,
-      filmId: DataTypes.INTEGER,
+      moviesId: DataTypes.INTEGER,
+      image: DataTypes.STRING,
       title: DataTypes.STRING,
-      time: DataTypes.STRING,
+      duration: DataTypes.STRING,
+      date: DataTypes.STRING,
       genre: DataTypes.STRING,
       casting: DataTypes.STRING,
       overview: DataTypes.STRING,
-      vote: DataTypes.STRING,
+      rating: DataTypes.STRING,
     },
     {
       sequelize,
